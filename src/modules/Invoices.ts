@@ -15,4 +15,43 @@ export class Invoices{
             params,
         })
     }
+
+    async create(payload:CreateInvoicePayload):Promise<Invoice>{
+        return this.client.request({
+            method:"POST",
+            url:"/invoices",
+            data:payload,
+        })
+    }
+
+    async get(id:string):Promise<Invoice>{
+        return this.client.request({
+            method:"GET",
+            url:`/invoices/${encodeURIComponent(id)}`,
+        })
+    }
+
+    async update(id:string,payload:UpdateInvoicePayload):Promise<Invoice>{
+        return this.client.request({
+            method:"POST",
+            url:`/invoices/${encodeURIComponent(id)}`,
+            data:payload,
+        })
+    }
+
+    async delete(id:string):Promise<void>{
+        await this.client.request({
+            method:"DELETE",
+            url:`/invoices/${encodeURIComponent(id)}`,
+            
+        })
+    }
+
+    async addPayment(payload:AddPaymentPayload){
+        return this.client.client.request({
+            method:"POST",
+            url:"/invoice/payments",
+            data:payload,
+        })
+    }
 }
