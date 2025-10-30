@@ -48,10 +48,62 @@ export class Invoices{
     }
 
     async addPayment(payload:AddPaymentPayload){
-        return this.client.client.request({
+        return this.client.request({
             method:"POST",
             url:"/invoice/payments",
             data:payload,
+        })
+    }
+
+    async removePayment(paymentId:string){
+        await this.client.request({
+            method:"DELETE",
+            url:`/invoices/payments/${encodeURIComponent(paymentId)}`,
+        })
+    }
+
+    async sendReminder(payload:SendReminderPayload){
+        return this.client.request({
+            method:"POST",
+            url:"/invoices/send-manual-remainder",
+            data:payload,
+        })
+    }
+
+    async share(payload:ShareInvoicePayload){
+        return this.client.request({
+            method:"POST",
+            url:"/invoices/share",
+            data:payload,
+        })
+    }
+
+    async download(invoiceId:string,filePath?:string):Promise<Buffer>{
+        const buffer=await this.client.request<ArrayBuffer>({
+            method:"GET",
+            url:`/invoices/${encodeURIComponent(invoiceId)}/download`,
+            responseType:"arraybuffer" as any
+        });
+
+        const file=Buffer.from(buffer);
+        if(filePath){
+            await fs.mkdir(path.dirname(filePath),{recursive:true})
+            await fs.writeFile(filePath,file)
+        }
+        return file;
+    }
+
+    async listByStatus(status:"overdue"|"awaiting"|"paid",params?:Record<string,any>):Promise<PaginatedResult<Invoice>>{
+        const endpointMap={
+            overdue:"/overdue-invoices",
+            awaiting:"/awaiting-invoices",
+            paid:"/paid-invoices",
+        };
+
+        return this.client.request({
+            method:"GET",
+            url:endpointMap[status],
+            params
         })
     }
 }
