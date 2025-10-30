@@ -8,3 +8,13 @@
   - List, Create, Get, Update, Delete
   - Link/Unlink deposit to invoice
 - Extended SDK entrypoint to expose `sdk.salesOrders` and `sdk.deposits`
+
+
+## [0.3.0] - 2025-10-31
+### Added
+- Quick Sales module
+  - List, Create, Get, Update, Delete endpoints
+- Other Incomes module
+  - List, Create, Get, Update, Delete endpoints
+- Completed Income suite (Invoices, Sales Orders, Deposits, Quick Sales, Other Incomes)
+- Updated SDK entry to expose `sdk.quickSales` and `sdk.otherIncomes`
