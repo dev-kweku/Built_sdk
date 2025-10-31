@@ -9,3 +9,4 @@ export * from "./IncomeTaxes";
 export * from "./WithholdingTaxes";
 export * from "./SalesTaxes";
 export * from "./Suppliers";
+export * from "./Payments"

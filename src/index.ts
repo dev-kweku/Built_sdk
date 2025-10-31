@@ -12,6 +12,7 @@
     SalesTaxes,
     Suppliers,
     } from "./modules";
+    import {Wallet,Topups,Withdrawals,Transfers,PaymentLinks,VirtualAccounts,Pay} from "./modules/Payments"
 
     export class BuiltSDK {
     public invoices: Invoices;
@@ -25,7 +26,18 @@
     public withholdingTaxes: WithholdingTaxes;
     public salesTaxes: SalesTaxes;
     public suppliers: Suppliers;
+    public payments:{
+        wallet: Wallet;
+        topups: Topups;
+        withdrawals: Withdrawals;
+        transfers: Transfers;
+        paymentLinks: PaymentLinks;
+        virtualAccounts: VirtualAccounts;
+        pay: Pay;
+
+    }
     private client: BuiltClient;
+    
 
     constructor(options: BuiltClientOptions) {
         this.client = new BuiltClient(options);
@@ -40,6 +52,16 @@
         this.withholdingTaxes = new WithholdingTaxes(this.client);
         this.salesTaxes = new SalesTaxes(this.client);
         this.suppliers = new Suppliers(this.client);
+
+        this.payments = {
+            wallet: new Wallet(this.client),
+            topups: new Topups(this.client),
+            withdrawals: new Withdrawals(this.client),
+            transfers: new Transfers(this.client),
+            paymentLinks: new PaymentLinks(this.client),
+            virtualAccounts: new VirtualAccounts(this.client),
+            pay: new Pay(this.client),
+            };
     }
     }
 
